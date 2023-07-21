@@ -5,17 +5,17 @@ db = client.pytech
 students = db["students"]
 
 
-fred = { "student_id": "1007",
+fred = { "student_id": 1007,
         "first_name": "Fred",
         "last_name": "Jones"
         }
 fred_student_id = students.insert_one(fred).inserted_id
-john = { "student_id": "1008", 
-        "first_name": "john", 
+john = { "student_id": 1008, 
+        "first_name": "John", 
         "last_name": "Jones" 
         }
 john_student_id = students.insert_one(john).inserted_id
-jane = { "student_id": "1009",
+jane = { "student_id": 1009,
         "first_name": "Jane",
         "last_name": "Doe"
         }
