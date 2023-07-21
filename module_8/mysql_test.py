@@ -8,8 +8,9 @@ config = {
     "database": "pysports",
     "raise_on_warnings": True
 }
-db = mysql.connector.connect(**config)
+#db = mysql.connector.connect(**config)
 try:
+    db = mysql.connector.connect(**config)
     print("\n Database user {} connected to MySQL on host {}".format(config["user"], config["host"], config["database"]))
     input("\n\n Press any key to conintue....")
 except mysql.connector.Error as err:
