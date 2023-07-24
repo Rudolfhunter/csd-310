@@ -27,9 +27,9 @@ def login():
     if user_account == "1":
         print("Great!")
         user_id = input("What is your user ID?")
-        user_id = tuple(user_id)
+        user_id2 = tuple(user_id)
         try:
-            cursor.execute(f"Select user_id FROM user WHERE user_id = (%s)", (user_id))
+            cursor.execute(f"Select user_id FROM user WHERE user_id = (%s)", (user_id2))
             print("Account found!")
         except:
             print("Account not found")
@@ -51,7 +51,17 @@ def login():
 #now = login()
 
 #List of books
-def books(now):
+def books():
+    config = {
+    "user": "whatabook_user",
+    "password": "MySQL8IsGreat!",
+    "host": "127.0.0.1",
+    "database": "whatabook",
+    "raise_on_warnings": True
+    }
+    db = mysql.connector.connect(**config)
+    now = input("What is your User ID")
+    now = tuple(now)
     print("-- List of Books --")
     try:
         cursor.execute("SELECT book_id, book_name, details, author FROM book")
@@ -65,7 +75,8 @@ def books(now):
                 
     except: 
         print("An error has occured please try again")
-        menu(now)
+        menu()
+    menu()
 
 
 #view store location and hours
@@ -80,10 +91,20 @@ def store():
             print("Store Hours: M-S 9-5")
             print()
     except:
-        menu(now)
+        menu()
+    menu()
         
 #View wishlist
-def wishlist(now):
+def wishlist():
+    config = {
+    "user": "whatabook_user",
+    "password": "MySQL8IsGreat!",
+    "host": "127.0.0.1",
+    "database": "whatabook",
+    "raise_on_warnings": True
+    }
+    db = mysql.connector.connect(**config)
+    now = input("What is your User ID")
     now = tuple(now)        
     cursor.execute(f"SELECT book.book_name from wishlist INNER JOIN book ON wishlist.book_id=book.book_id WHERE user_id = (%s)", (now))
     wishlist_books = cursor.fetchall()
@@ -92,12 +113,22 @@ def wishlist(now):
         for book in wishlist_books:
             print(f"Book Name: {book}")
             print()
-            wishlist_add(now)
+            wishlist_add()
     except: 
-        menu(now)
+        menu()
+    menu()
         
 # add books to wishlist
-def add_wishlist(now):
+def add_wishlist():
+    config = {
+    "user": "whatabook_user",
+    "password": "MySQL8IsGreat!",
+    "host": "127.0.0.1",
+    "database": "whatabook",
+    "raise_on_warnings": True
+    }
+    db = mysql.connector.connect(**config)
+    now = input("What is your User ID")
     now = tuple(now)
     user_input = input("Do you want to add a book to your wishlist? Press 1 for yes 2 for no.")
     if user_input == "1":
@@ -113,23 +144,24 @@ def add_wishlist(now):
             print("The book has been added to your wishlist!")
         except:
             print("The book was unable to be added to your wishlist.")
-            menu(now)
+            menu()
     elif user_input == "2":
         now = str(now)
-        menu(now)
-
+        menu()
+    menu()
 #Menu
-def menu(id):
+def menu():
     print("Press 1 to view of list of books available, press 2 to view your wishlist, press 3 to view store hours and locations.")
     response = input()
     if response == "1":
-        books(id)
+        books()
     elif response == "2":
-        wishlist(id)
+        wishlist()
     elif response == "3":
         store()
 
 #start program
-menu(login())
-
-#books("1")
+#login()
+menu()
+#wishlist()
+#books()
